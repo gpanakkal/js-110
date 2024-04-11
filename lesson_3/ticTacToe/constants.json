@@ -1,0 +1,11 @@
+{
+  "USER_SHAPE": "O",
+  "COMPUTER_SHAPE": "X",
+  "ROW_SEPARATOR": "-",
+  "COLUMN_SEPARATOR": "|",
+  "BOARD_DESIRED_WIDTH": "10",
+  "WELCOME_MESSAGE": "Welcome to Tic Tac Toe!",
+  "USER_TURN_PROMPT": "Select the row and column of your next choice as 'rowNum columNum': ",
+  "PLAY_AGAIN_PROMPT": "Play again? y / n: ",
+  "TERMINATE_SESSION_MESSAGE": "Ending session. Thanks for playing!"
+}
