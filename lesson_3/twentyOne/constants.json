@@ -1,0 +1,32 @@
+{
+  "WELCOME_MESSAGE": "Welcome to Twenty One!",
+  "USER_TURN_PROMPT": "Hit or stay? ",
+  "PLAY_AGAIN_PROMPT": "Play again? y / n: ",
+  "GAME_INITIALIZED_MESSAGE": "-----NEW GAME STARTED-----",
+  "TERMINATE_SESSION_MESSAGE": "Ending session. Thanks for playing!",
+  "INVALID_TURN_MESSAGE": "User made invalid selection:",
+  "GAME_OUTCOME_HEADER": "-----GAME OUTCOME-----",
+  "PLAYER_WIN_MESSAGE": "The player won the game!",
+  "DEALER_WIN_MESSAGE": "The dealer won the game!",
+  "GAME_DRAW_MESSAGE": "The game ended in a draw",
+  "SUITS": ["Spades", "Hearts", "Clubs", "Diamonds"],
+  "CARD_NAMES": [
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "Jack",
+    "Queen",
+    "King",
+    "Ace"
+  ],
+  "ROYAL_CARD_POINTS": 10,
+  "SHUFFLE_ITERATIONS": 50,
+  "MINIMUM_BUST_SCORE": 22,
+  "DEALER_STAY_SCORE": 17
+}
