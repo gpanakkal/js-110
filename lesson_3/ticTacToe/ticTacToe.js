@@ -1,6 +1,5 @@
 const { question } = require('readline-sync');
 const constants = require('./constants.json');
-const { waitForDebugger } = require('inspector');
 
 const DEFAULT_BOARD_STATE = [
   [' ', ' ', ' '],
@@ -32,11 +31,11 @@ function ticTacToe() {
 }
 
 ticTacToe();
-/** status: dev
- * Handle the core logic of 
+/** status: done
+ * Handle the core logic of each turn
  */
 async function turnIteration(currentBoardState) {
-  const userChoiceIsValid = ([rowNum, columnNum]) => currentBoardState[rowNum]?.[columnNum] !== undefined;
+  const userChoiceIsValid = ([rowNum, columnNum]) => currentBoardState[rowNum]?.[columnNum] === constants.EMPTY_CELL;
 
   const userChoice = getValidInput(constants.USER_TURN_PROMPT, (prompt) => question(prompt).split(' '),
     constants.INVALID_TURN_MESSAGE, userChoiceIsValid);
@@ -86,6 +85,15 @@ function makeComputerChoice(boardState) {
     return {value: cell, indices: [rowNum, columNum]};
   })).flat();
   const emptyCells = cellsWithIndices.filter((cellObj) => cellObj.value === constants.EMPTY_CELL);
+  // if a winning play exists, make it
+  const computerThreats = threatLines(boardState, constants.COMPUTER_SHAPE);
+  if (computerThreats.length > 0) return computerThreats[0].filter(([row, column]) => boardState[row][column] === constants.EMPTY_CELL)[0]; 
+  // else prevent a winning play from the opponent
+  const userThreats = threatLines(boardState, constants.USER_SHAPE);
+  if (userThreats.length > 0) return userThreats[0].filter(([row, column]) => boardState[row][column] === constants.EMPTY_CELL)[0]; 
+  // else pick the middle cell
+  if (boardState[1][1] === constants.EMPTY_CELL) return [1, 1];
+  // else pick a random empty cell
   const randomEmptyCellIndex = Math.floor(Math.random() * emptyCells.length);
   const computerChoice = emptyCells[randomEmptyCellIndex].indices;
   return computerChoice;
@@ -159,15 +167,24 @@ function winningTripletFound(boardState) {
  */
 function getValidTriplets() {
   // set up an array of valid triplets of 2-tuples (cell indices)
-  const validTripletRows = DEFAULT_BOARD_STATE.map((row, rowIndex) => {
-    return row.map((value, columnIndex) => ([rowIndex, columnIndex]))
-  });
-  const validTripletColumns = DEFAULT_BOARD_STATE.map((row, rowIndex) => {
-    return row.map((value, columnIndex) => ([columnIndex, rowIndex]))
-  });
+  const validTripletRows = DEFAULT_BOARD_STATE.map((row, rowIndex) => row.map((value, columnIndex) => ([rowIndex, columnIndex])));
+  const validTripletColumns = DEFAULT_BOARD_STATE.map((row, rowIndex) => row.map((value, columnIndex) => ([columnIndex, rowIndex])));
   const validTripletDiagonals = [
     [[0, 0], [1, 1], [2, 2]],
     [[0, 2], [1, 1], [2, 0]],
   ]
   return [...validTripletRows, ...validTripletColumns, ...validTripletDiagonals];
+}
+/** status: done
+ * Returns all triplets that contain two instances of the passed shape and one empty cell
+ * @param {} shape USER_SHAPE or COMPUTER_SHAPE
+ */
+function threatLines(boardState, shape) {
+  const allTriplets = getValidTriplets();
+  const tripletsWithValues = allTriplets.map(triplet => triplet.map(([row, column]) => ({value: boardState[row][column], indices: [row, column]})));
+  const correctShapeCounts = tripletsWithValues.filter(tripletObj => tripletObj.reduce((sum, curr) => curr.value === shape ? sum + 1 : sum, 0) === 2);
+  const threatLines = correctShapeCounts.filter(triplet => triplet.some(cellObj => cellObj.value === ' '))
+    .map(tripletObj => tripletObj.map(cellObj => cellObj.indices));
+  // console.log({allTriplets, tripletsWithValues, correctShapeCounts, threatLines});
+  return threatLines;
 }
