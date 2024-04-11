@@ -2,12 +2,6 @@
 const { question } = require('readline-sync');
 const constants = require('./constants.json');
 
-const DEFAULT_BOARD_STATE = [
-  [' ', ' ', ' '],
-  [' ', ' ', ' '],
-  [' ', ' ', ' '],
-];
-
 const displayOutcomeMessage = (winnerName) => {
   console.log(winnerName === 'draw' ? 'Game was a draw!' : `${winnerName} won!`);
 };
@@ -57,9 +51,9 @@ function displayBoard(boardState) {
  */
 function getValidTriplets() {
   // set up an array of valid triplets of 2-tuples (cell indices)
-  const validTripletRows = DEFAULT_BOARD_STATE
+  const validTripletRows = constants.DEFAULT_BOARD_STATE
     .map((row, rowIndex) => row.map((value, columnIndex) => ([rowIndex, columnIndex])));
-  const validTripletColumns = DEFAULT_BOARD_STATE
+  const validTripletColumns = constants.DEFAULT_BOARD_STATE
     .map((row, rowIndex) => row.map((value, columnIndex) => ([columnIndex, rowIndex])));
   const validTripletDiagonals = [
     [[0, 0], [1, 1], [2, 2]],
@@ -189,7 +183,7 @@ function ticTacToe() {
   console.log(constants.WELCOME_MESSAGE);
 
   while (true) {
-    const currentBoardState = JSON.parse(JSON.stringify(DEFAULT_BOARD_STATE));
+    const currentBoardState = JSON.parse(JSON.stringify(constants.DEFAULT_BOARD_STATE));
     displayBoard(currentBoardState);
 
     while (gameOutcome(currentBoardState) === 'undecided') {

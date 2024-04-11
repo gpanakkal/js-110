@@ -1,6 +1,11 @@
 {
   "USER_SHAPE": "O",
   "COMPUTER_SHAPE": "X",
+  "DEFAULT_BOARD_STATE": [
+    [" ", " ", " "],
+    [" ", " ", " "],
+    [" ", " ", " "]
+  ],
   "EMPTY_CELL": " ",
   "ROW_SEPARATOR": "-",
   "COLUMN_SEPARATOR": "|",
