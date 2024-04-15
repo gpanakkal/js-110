@@ -192,7 +192,7 @@ function ticTacToe() {
     // once the game is over
     displayOutcomeMessage(gameOutcome(currentBoardState));
     const playAgain = getValidInput(constants.PLAY_AGAIN_PROMPT, question, undefined, (userInput) => ['y', 'n'].includes(userInput.toLowerCase()));
-    if (playAgain === 'n') {
+    if (playAgain.toLowerCase() === 'n') {
       console.log(constants.TERMINATE_SESSION_MESSAGE);
       break;
     }
